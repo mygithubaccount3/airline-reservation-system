@@ -23,7 +23,7 @@ public class Main {
 
                     switch (input) {
                         case "1" -> Renderer.showSchedule();
-                        case "2" -> TicketService.buy(email);
+                        case "2" -> TicketService.chooseTicket(email);
                         case "3" -> Renderer.showReturnTicketMenu();
 //                    case 4 -> auth.signOut();
                         case "5" -> System.exit(0);

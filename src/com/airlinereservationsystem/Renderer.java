@@ -1,5 +1,7 @@
 package com.airlinereservationsystem;
 
+import com.airlinereservationsystem.tickets.Ticket;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +64,7 @@ public class Renderer {
 
         System.out.println();
 
-        for (Flight flight : Flight.flights) {
+        for (Flight flight : Flight.flightDB.getFlights()) {
             System.out.printf("%-15s", flight.getFlight());
             System.out.printf("%-15s", flight.getArrivalTime());
             System.out.printf("%-20s", flight.getDepartureTime() != null ? flight.getDepartureTime() : "-");
@@ -85,9 +87,9 @@ public class Renderer {
     public static void renderAvailableSeats(Flight flight) {
         renderTitle("Available seats");
 
-        for (int i = 1; i <= flight.getTickets().size(); i++) {
-            if(flight.getTickets().get(i - 1).getStatus().equals("available")) {
-                System.out.printf("%-6s", flight.getTickets().get(i - 1).getSeat());
+        for (int i = 1; i <= Ticket.ticketDB.getTickets(flight).size(); i++) {
+            if(Ticket.ticketDB.getTickets(flight).get(i - 1).getStatus().equals("available")) {
+                System.out.printf("%-6s", Ticket.ticketDB.getTickets(flight).get(i - 1).getSeat());
             } else {
                 System.out.printf("%-6s", " ");
             }

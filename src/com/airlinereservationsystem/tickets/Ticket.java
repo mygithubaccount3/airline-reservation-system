@@ -1,5 +1,9 @@
 package com.airlinereservationsystem.tickets;
 
+import com.airlinereservationsystem.Flight;
+import com.airlinereservationsystem.FlightDatabase;
+import com.airlinereservationsystem.TicketDatabase;
+
 public class Ticket {
     ///Inheritance: Ticket -> Econom, Premium
     //calculate price depend on class, in setter
@@ -8,21 +12,29 @@ public class Ticket {
     private int seat;
     private float price;
     private String seatClass;
-
+    private Flight flight;
     private String status;
-
     private String owner;
 
-    public Ticket(int seat, String seatClass, String owner) {
+    private static final FlightDatabase flightDB = Flight.flightDB;
+    public static final TicketDatabase ticketDB = new TicketDatabase(flightDB);
+
+    public Ticket(int seat, String seatClass, Flight flight) {
         this.seat = seat;
         this.price = seatClass.equals("econom") ? ECONOM_PRICE : PREMIUM_PRICE;
         this.seatClass = seatClass;
-        this.owner = owner;
+        this.flight = flight;
         this.status = "available";
     }
-    public Ticket(String owner) {
-        this.owner = owner;
+
+    public Ticket() {
         this.status = "available";
+    }
+
+    public void buy(String owner) {
+        this.setStatus("sold");
+        this.setOwner(owner);
+        System.out.println("Ticket is bought");
     }
 
     public int getSeat() {
@@ -39,6 +51,10 @@ public class Ticket {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Flight getFlight() {
+        return flight;
     }
 
     public void setOwner(String owner) {
