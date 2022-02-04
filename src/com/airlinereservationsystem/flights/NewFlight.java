@@ -1,6 +1,10 @@
-package com.airlinereservationsystem;
+package com.airlinereservationsystem.flights;
 
-public class Flight {
+import com.airlinereservationsystem.Airline;
+import com.airlinereservationsystem.Gate;
+import com.airlinereservationsystem.Status;
+
+public class NewFlight implements Flight {
     private final String flight;
     private String departureTime = "00:00";
     private String arrivalTime = "00:00";
@@ -10,14 +14,13 @@ public class Flight {
     private char terminal = 'D';
     private Gate gate = Gate.D1;
     private Status status = Status.EXPECTED;
-    public static final FlightDatabase flightDB = new FlightDatabase();
 
     @Override
     public String toString() {
-        return "Flight: %s Airline: %s".formatted(this.flight, this.airline);
+        return "Flight: %s Airline: %s".formatted(flight, airline);
     }
 
-    public Flight(
+    public NewFlight(
             String flight, String departureTime, String arrivalTime, String arrivalStation, Airline airline,
             char terminal, Gate gate, Status status) {
         this.flight = flight;
@@ -30,42 +33,50 @@ public class Flight {
         this.status = status;
     }
 
-    public Flight(String flight, String arrivalStation, String departureStation, Airline airline) {
+    public NewFlight(String flight, String arrivalStation, String departureStation, Airline airline) {
         this.flight = flight;
         this.arrivalStation = arrivalStation;
         this.departureStation = departureStation;
         this.airline = airline;
     }
 
-    public String getFlight() {
+    @Override
+    public String flight() {
         return flight;
     }
 
-    public String getArrivalTime() {
+    @Override
+    public String arrivalTime() {
         return arrivalTime;
     }
 
-    public String getDepartureTime() {
+    @Override
+    public String departureTime() {
         return departureTime;
     }
 
-    public String getArrivalStation() {
+    @Override
+    public String arrivalStation() {
         return arrivalStation;
     }
 
-    public Airline getAirline() {
+    @Override
+    public Airline airline() {
         return airline;
     }
 
-    public char getTerminal() {
+    @Override
+    public char terminal() {
         return terminal;
     }
 
-    public Gate getGate() {
+    @Override
+    public Gate gate() {
         return gate;
     }
 
-    public Status getStatus() {
+    @Override
+    public Status status() {
         return status;
     }
 }
