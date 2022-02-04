@@ -3,6 +3,7 @@ package com.airlinereservationsystem.renderer;
 import com.airlinereservationsystem.databases.DatabaseConnection;
 import com.airlinereservationsystem.flights.Flight;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class NewRenderer implements Renderer {
 
         System.out.println();
 
-        for (Flight flight : DatabaseConnection.flightDB.get()) {
+        for (Flight flight : DatabaseConnection.flightDB.get().stream().sorted(Comparator.comparing(Flight::arrivalTime)).toList()) {
             System.out.printf("%-15s", flight.flight());
             System.out.printf("%-15s", flight.arrivalTime());
             System.out.printf("%-20s", flight.departureTime() != null ? flight.departureTime() : "-");
@@ -93,7 +94,7 @@ public class NewRenderer implements Renderer {
         renderTitle("Available seats");
 
         for (int i = 1; i <= DatabaseConnection.ticketDB.get(flight).size(); i++) {//declare ticketDB in top of method
-            if(DatabaseConnection.ticketDB.get(flight).get(i - 1).status().equals("available")) {
+            if (DatabaseConnection.ticketDB.get(flight).get(i - 1).status().equals("available")) {
                 System.out.printf("%-6s", DatabaseConnection.ticketDB.get(flight).get(i - 1).seat());
             } else {
                 System.out.printf("%-6s", " ");
